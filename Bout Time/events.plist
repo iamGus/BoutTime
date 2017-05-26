@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Barack Obama Elected as President of America</key>
+	<dict>
+		<key>year</key>
+		<integer>2008</integer>
+	</dict>
+	<key>Apple unveils iPhone</key>
+	<dict>
+		<key>year</key>
+		<integer>2007</integer>
+	</dict>
+	<key>Facebook Founded</key>
+	<dict>
+		<key>year</key>
+		<integer>2004</integer>
+	</dict>
+	<key>Operation Desert Storm - Start of Gulf War</key>
+	<dict>
+		<key>year</key>
+		<integer>1990</integer>
+	</dict>
+	<key>Fall of Berlin Wall</key>
+	<dict>
+		<key>year</key>
+		<integer>1989</integer>
+	</dict>
+	<key>Concorde Flies for the First Time</key>
+	<dict>
+		<key>year</key>
+		<integer>1969</integer>
+	</dict>
+	<key>JFK Assassinated</key>
+	<dict>
+		<key>year</key>
+		<integer>1963</integer>
+	</dict>
+	<key>Cuban Missile Crisis</key>
+	<dict>
+		<key>year</key>
+		<integer>1962</integer>
+	</dict>
+	<key>First Man in Space</key>
+	<dict>
+		<key>year</key>
+		<integer>1961</integer>
+	</dict>
+	<key>Pearl Harbour Attacked</key>
+	<dict>
+		<key>year</key>
+		<integer>1941</integer>
+	</dict>
+	<key>Germany Invades Poland</key>
+	<dict>
+		<key>year</key>
+		<integer>1939</integer>
+	</dict>
+	<key>Hindenburg Airship Crash</key>
+	<dict>
+		<key>year</key>
+		<integer>1937</integer>
+	</dict>
+	<key>Wright Brother&apos;s First Flight</key>
+	<dict>
+		<key>year</key>
+		<real>1903</real>
+	</dict>
+	<key>Queen Victoria&apos;s Funeral</key>
+	<dict>
+		<key>year</key>
+		<integer>1901</integer>
+	</dict>
+</dict>
+</plist>
