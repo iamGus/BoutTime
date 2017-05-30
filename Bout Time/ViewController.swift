@@ -19,13 +19,13 @@ class ViewController: UIViewController {
     
     
     
-    let dictionaryOfEvents: [String: EachEventContent] // NOTE this might change but currently set so can test what data import looks like
+    let dictionaryOfEvents: EventRounds // NOTE this might change but currently set so can test what data import looks like
     
     required init?(coder aDecoder: NSCoder) {
         do {
             let dictionary = try Plistconverter.dictionary(fromFile: "events", ofType: "plist")
             let inventory = try EventDataUnarchiver.eventData(fromDictionary: dictionary)
-            self.dictionaryOfEvents = inventory
+            self.dictionaryOfEvents = AllRounds(eventDictionary: inventory)
         } catch let error {
             fatalError("\(error)")
         }
@@ -39,9 +39,21 @@ class ViewController: UIViewController {
         
         //test to see data in dictionary - it works! - CHANGE this to be calling function below *func
         
-        for (key, value) in dictionaryOfEvents {
-            print("\(key) happend in \(value.year)\n")
-        }
+        let space = dictionaryOfEvents.eventDictionary[0]
+        print(space.event)
+        
+        let random = dictionaryOfEvents.nextRound()
+        print(random[0].event)
+        
+        
+       // let key0 = dictionaryOfEvents.eventDictionary[0]
+       // print(key0)
+        //print(key0)
+        
+        //for event in dictionaryOfEvents.eventDictionary {
+        //    print("\(event.event) in \(event.year)")
+        //}
+        
       
     }
 

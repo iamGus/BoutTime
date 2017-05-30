@@ -9,16 +9,23 @@
 import Foundation
 import UIKit
 
-protocol EachEventContent { // Making sure year data is inlcuded in event, though each event only has one conncted value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later stafe if desired.
+protocol EventContent { // Making sure year data is inlcuded in event, though each event only has one conncted value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later stafe if desired.
+    var event: String { get }
     var year: Int { get }
 }
 
-protocol EachEventKey {
-    var name: String { get }
+protocol EventRounds {
+    var eventDictionary: [EventContent] {get set }
+    
+    init(eventDictionary: [EventContent])
+    func fourRandomNumbers(maxQuestion max: Int) -> [Int]
+    func nextRound() -> [EventContent]
 }
 
-struct EventContent: EachEventContent {
-    let year: Int
+struct Event: EventContent {
+    var event: String
+    var year: Int
+    
 }
 
 // error states for collecting data
@@ -45,14 +52,14 @@ class Plistconverter {
 
 //
 class EventDataUnarchiver {
-    static func eventData(fromDictionary dictionary: [String: AnyObject]) throws -> [String: EachEventContent] {
+    static func eventData(fromDictionary dictionary: [String: AnyObject]) throws -> [EventContent] {
         
-        var eventData: [String: EachEventContent] = [:] //NOTE dont think data is best word here to describe it
+        var eventData: [EventContent] = [] //NOTE dont think data is best word here to describe it
         
         for (key, value) in dictionary {
             if let itemDictionary = value as? [String: Any], let year = itemDictionary["year"] as? Int {
-                let year = EventContent(year: year)
-                eventData.updateValue(year, forKey: key)
+                let content = Event(event: key, year: year)
+                eventData.append(content)
             
                 } else {
             
@@ -65,7 +72,13 @@ class EventDataUnarchiver {
 }
 
 
-class Rounds {
+class AllRounds: EventRounds {
+    
+    var eventDictionary: [EventContent]
+    
+    required init(eventDictionary: [EventContent]) {
+        self.eventDictionary = eventDictionary
+    }
     
     func fourRandomNumbers(maxQuestion max: Int) -> [Int] {
         var result: [Int] = [] // Array to return four random numbers
@@ -84,19 +97,20 @@ class Rounds {
         }
         return result
     }
-    /*
     
-    func nextRound(dictionary: [String: EachEvent]) -> [String: EachEventContent] {
-        var fourRandomQuestions: [String: EachEvent] = [:]
-        var fourNumbers = fourRandomNumbers(maxQuestion: dictionary.count)
+    
+    func nextRound() -> [EventContent] {
+        var fourRandomQuestions: [EventContent] = []
+        let fourNumbers = fourRandomNumbers(maxQuestion: eventDictionary.count)
         for i in fourNumbers {
-            
-            fourRandomQuestions = (EachEvent)
+            let eachEvent = eventDictionary[i]
+            let content = Event(event: eachEvent.event, year: eachEvent.year)
+            fourRandomQuestions.append(content)
         }
         
         return fourRandomQuestions
     }
- */
+ 
 }
 
 
