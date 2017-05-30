@@ -42,6 +42,9 @@
                                                 </constraints>
                                                 <state key="normal" image="down_full"/>
                                                 <state key="highlighted" image="down_full_selected"/>
+                                                <connections>
+                                                    <action selector="box1DownArrow" destination="BYZ-38-t0r" eventType="touchUpInside" id="g95-h3-tQ5"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -80,6 +83,9 @@
                                                         </constraints>
                                                         <state key="normal" image="up_half"/>
                                                         <state key="highlighted" image="up_half_selected"/>
+                                                        <connections>
+                                                            <action selector="box2UpArrow" destination="BYZ-38-t0r" eventType="touchUpInside" id="YhY-f8-eJk"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fja-wP-KL4">
                                                         <rect key="frame" x="0.0" y="61.5" width="40" height="61.5"/>
@@ -88,6 +94,9 @@
                                                         </constraints>
                                                         <state key="normal" image="down_half"/>
                                                         <state key="highlighted" image="down_half_selected"/>
+                                                        <connections>
+                                                            <action selector="box2DownArrow" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fbo-DW-7Gg"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -131,6 +140,9 @@
                                                         </constraints>
                                                         <state key="normal" image="up_half"/>
                                                         <state key="highlighted" image="up_half_selected"/>
+                                                        <connections>
+                                                            <action selector="box3UpArrow" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nh3-xx-ThW"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k4m-9k-K0h">
                                                         <rect key="frame" x="0.0" y="61" width="40" height="61.5"/>
@@ -139,6 +151,9 @@
                                                         </constraints>
                                                         <state key="normal" image="down_half"/>
                                                         <state key="highlighted" image="down_half_selected"/>
+                                                        <connections>
+                                                            <action selector="box3DownArrow" destination="BYZ-38-t0r" eventType="touchUpInside" id="trv-q0-bBq"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -179,6 +194,9 @@
                                                 </constraints>
                                                 <state key="normal" image="up_full"/>
                                                 <state key="highlighted" image="up_full_selected"/>
+                                                <connections>
+                                                    <action selector="box4UpArrow" destination="BYZ-38-t0r" eventType="touchUpInside" id="3HJ-m4-cK7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -209,6 +227,9 @@
                                 <rect key="frame" x="116" y="619" width="143" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Shake to complete"/>
+                                <connections>
+                                    <action selector="shakeToCompleteButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="Txx-Dx-Rim"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.01274052262" green="0.16151914000000001" blue="0.29200941320000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -223,6 +244,13 @@
                             <constraint firstItem="EbO-zZ-R7Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="l31-4h-zvJ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="eventLabel1" destination="TQx-5t-GcY" id="Ocx-mV-WQC"/>
+                        <outlet property="eventLabel2" destination="MvA-Hr-XEZ" id="RYK-sc-iEI"/>
+                        <outlet property="eventLabel3" destination="rjg-7k-hjh" id="9cR-l1-TFm"/>
+                        <outlet property="eventLabel4" destination="a10-L9-6RI" id="kNG-QT-qbP"/>
+                        <outlet property="timerLabel" destination="hGp-E2-5wr" id="Ulm-Xu-PAt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

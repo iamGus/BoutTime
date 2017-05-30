@@ -9,11 +9,15 @@
 import Foundation
 import UIKit
 
-protocol EachEvent { // Making sure year data is inlcuded in event, though each event only has one conncted value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later stafe if desired.
+protocol EachEventContent { // Making sure year data is inlcuded in event, though each event only has one conncted value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later stafe if desired.
     var year: Int { get }
 }
 
-struct Event: EachEvent {
+protocol EachEventKey {
+    var name: String { get }
+}
+
+struct EventContent: EachEventContent {
     let year: Int
 }
 
@@ -21,7 +25,7 @@ struct Event: EachEvent {
 enum DataError: Error {
     case invalidResource
     case conversionFailure
-    case invalidSelection
+    case invalidData
 }
 
 // Converts event data from a plist file and puts (converts) data into a dictionary
@@ -41,28 +45,59 @@ class Plistconverter {
 
 //
 class EventDataUnarchiver {
-    static func eventData(fromDictionary dictionary: [String: AnyObject]) throws -> [String: EachEvent] {
+    static func eventData(fromDictionary dictionary: [String: AnyObject]) throws -> [String: EachEventContent] {
         
-        var eventData: [String: EachEvent] = [:] //NOTE dont think data is best word here to describe it
+        var eventData: [String: EachEventContent] = [:] //NOTE dont think data is best word here to describe it
         
         for (key, value) in dictionary {
             if let itemDictionary = value as? [String: Any], let year = itemDictionary["year"] as? Int {
-                let year = Event(year: year)
-                
-                // I am missing out the invalidselction as I think this is covered already in importing key as String
-                
-                
-            eventData.updateValue(year, forKey: key)
+                let year = EventContent(year: year)
+                eventData.updateValue(year, forKey: key)
             
-            }
+                } else {
+            
+                throw DataError.invalidData
+                }
         }
-        
         
        return eventData
     }
 }
 
 
+class Rounds {
+    
+    func fourRandomNumbers(maxQuestion max: Int) -> [Int] {
+        var result: [Int] = [] // Array to return four random numbers
+        var nums = Array(0..<max) // Store numbers and remove when used, to stop number being repeated in reults array
+        
+        for _ in 1...4 { // repeat 4 times
+            
+            // random key from array
+            let arrayKey = Int(arc4random_uniform(UInt32(nums.count)))
+            
+            // random number
+            result.append(nums[arrayKey])
+            
+            // make sure the number isnt repeated
+            nums.remove(at: arrayKey)
+        }
+        return result
+    }
+    /*
+    
+    func nextRound(dictionary: [String: EachEvent]) -> [String: EachEventContent] {
+        var fourRandomQuestions: [String: EachEvent] = [:]
+        var fourNumbers = fourRandomNumbers(maxQuestion: dictionary.count)
+        for i in fourNumbers {
+            
+            fourRandomQuestions = (EachEvent)
+        }
+        
+        return fourRandomQuestions
+    }
+ */
+}
 
 
 
