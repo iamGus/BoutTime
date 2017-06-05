@@ -20,6 +20,7 @@ protocol EventRounds {
     init(eventDictionary: [EventContent])
     func fourRandomNumbers(maxQuestion max: Int) -> [Int]
     func nextRound() -> [EventContent]
+    func checkRound(orderOfQuestions: [EventContent]) -> Bool
 }
 
 struct Event: EventContent {
@@ -107,8 +108,33 @@ class AllRounds: EventRounds {
             let content = Event(event: eachEvent.event, year: eachEvent.year)
             fourRandomQuestions.append(content)
         }
-        
         return fourRandomQuestions
+    }
+    
+    func checkRound(orderOfQuestions: [EventContent]) -> Bool {
+       // let fourQuestionsOrder: [EventContent] = []
+        var checkYearOrder: [Int] = []
+        var answer: Bool = true
+        var i = 0
+  //      print(i)
+        for i in orderOfQuestions {
+            checkYearOrder.append(i.year)
+        }
+ //       print(checkYearOrder)
+        for _ in checkYearOrder {
+            if checkYearOrder[i] >= checkYearOrder[i+1] {
+                answer = false
+  //              print("in loop false")
+                break
+            } else if i < 2 {
+   //                 print("adding \(i)")
+                    i += 1
+            } else {
+            break
+            }
+        }
+ //       print(i)
+        return answer
     }
  
 }
