@@ -16,14 +16,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var eventLabel3: UILabel!
     @IBOutlet weak var eventLabel4: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var ShakeButton: UIButton!
+    @IBOutlet weak var nextRoundButton: UIButton!
+    
     
     
     // Propertoies to setup
     let dictionaryOfEvents: EventRounds
     var fourRandomEvents: [EventContent]
-    let howManyRounds = 6
+    let howManyRounds = 1
     var roundsCompleted = 0 // So game knows how many rounds it has already done
     var roundsCorrect = 0 // Counter to keep track of how many rounds correctly completed - for score
+    var timer = Timer()
+    var counter = 0
     
     required init?(coder aDecoder: NSCoder) {
         do {
@@ -70,22 +75,71 @@ class ViewController: UIViewController {
     
     // MARK: - Setup and display round
     func displayround() {
+        
+        /* ---------------------------
+         If user has completed all rounds in howManyRounds then finish game and show user score
+           ---------------------------- */
+        
+        if roundsCompleted >= howManyRounds {
+            //end game and show score
+          
+            self.performSegue(withIdentifier: "segue", sender: nil)
+        // 
+        // If user has not completed all rounds then contiue display next round
+        //
+            
+        } else {
+        //Hide next round button
+        nextRoundButton.isHidden = true
+        // Make new / update instance of next round questions
         fourRandomEvents = dictionaryOfEvents.nextRound()
         eventLabel1.text = "\(fourRandomEvents[0].event)"
         eventLabel2.text = "\(fourRandomEvents[1].event)"
         eventLabel3.text = "\(fourRandomEvents[2].event)"
         eventLabel4.text = "\(fourRandomEvents[3].event)"
+        
+        //Show shake button
+        ShakeButton.isHidden = false
+        
+        //Show and start counter
+        timerLabel.isHidden = false
+        timerLabel.text = "0:00"
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)
+           
+        }
     }
     
     // End of round - check score and show correct or wrong button
+    func checkRound(check answer: Bool) {
+        
+        //Hide timer and reset it for next round
+        timerLabel.isHidden = true
+        timer.invalidate()
+        counter = 0
+        
+        
+        ShakeButton.isHidden = true
+        roundsCompleted += 1
+        if answer == true {
+            roundsCorrect += 1
+            nextRoundButton.setImage(#imageLiteral(resourceName: "next_round_success"), for: UIControlState.normal)
+            nextRoundButton.isHidden = false
+        } else {
+            nextRoundButton.setImage(#imageLiteral(resourceName: "next_round_fail"), for: UIControlState.normal)
+            nextRoundButton.isHidden = false
+        }
+        
+    }
     
-    // If phone is shaked 
-    // NOTE will need to put error in if shake when rounds ended.
+    
+    // If phone is shaked while in round
+    // Only runs if counter is still running meaning round still in play
+    // So player cannot cheat and try and shake after round finished
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-        if event?.subtype == UIEventSubtype.motionShake {
-            print("Shake")
+        if event?.subtype == UIEventSubtype.motionShake && timer.isValid == true {
             let answer = dictionaryOfEvents.checkRound(orderOfQuestions: fourRandomEvents)
-            print(answer)
+            checkRound(check: answer)
+            
         }
     }
    
@@ -114,7 +168,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func shakeToCompleteButton() {
+        let answer = dictionaryOfEvents.checkRound(orderOfQuestions: fourRandomEvents)
+        checkRound(check: answer)
     }
+    
+    @IBAction func nextRound() {
+        displayround()
+    }
+    
+    
+    
     
     // Changes fourRandomEvent array order and updates buttons text fields
     func rearrangeRound(fromIndex: Int, toIndex: Int) {
@@ -126,7 +189,28 @@ class ViewController: UIViewController {
         eventLabel4.text = "\(fourRandomEvents[3].event)"
     }
     
+    // Timer method
     
+    func updateTimer() {
+        if counter >= 60 {
+            timer.invalidate()
+            let answer = dictionaryOfEvents.checkRound(orderOfQuestions: fourRandomEvents) //NOTE repeated this three times now
+            checkRound(check: answer)
+        } else {
+        counter += 1
+        timerLabel.text = timeString(time: TimeInterval(counter))
+        }
+    }
+    
+    // Timer formatting
+    
+    func timeString(time: TimeInterval) -> String {
+        
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        
+        return String(format:"%01i:%02i", minutes, seconds)
+    }
     
 }
 

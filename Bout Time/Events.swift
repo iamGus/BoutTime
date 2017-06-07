@@ -111,29 +111,26 @@ class AllRounds: EventRounds {
         return fourRandomQuestions
     }
     
+    // Check if years in a round are in order and return true for correct or false for wrong order
     func checkRound(orderOfQuestions: [EventContent]) -> Bool {
-       // let fourQuestionsOrder: [EventContent] = []
         var checkYearOrder: [Int] = []
         var answer: Bool = true
         var i = 0
-  //      print(i)
+        // Get years from input and put just the year (not the event name) into own array
         for i in orderOfQuestions {
             checkYearOrder.append(i.year)
         }
- //       print(checkYearOrder)
+        // Loop over the years in array checking if in order
         for _ in checkYearOrder {
             if checkYearOrder[i] >= checkYearOrder[i+1] {
                 answer = false
-  //              print("in loop false")
                 break
             } else if i < 2 {
-   //                 print("adding \(i)")
                     i += 1
             } else {
             break
             }
         }
- //       print(i)
         return answer
     }
  
