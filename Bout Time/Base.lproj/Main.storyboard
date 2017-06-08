@@ -301,8 +301,7 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="play_again"/>
                                 <connections>
-                                    <action selector="nextRound" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wwi-r9-rrl"/>
-                                    <action selector="playAgain" destination="v2D-z5-Gao" eventType="touchUpInside" id="xGl-fD-7eJ"/>
+                                    <action selector="playAgain:" destination="v2D-z5-Gao" eventType="touchUpInside" id="OT4-Bd-eaB"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Score" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SFl-On-1OU">
@@ -325,6 +324,7 @@
                     </view>
                     <connections>
                         <outlet property="scoreResultsLabel" destination="iCO-qV-PhD" id="8zE-ml-87I"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="back" id="mVF-Qx-ltt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9WP-Wk-hBG" userLabel="First Responder" sceneMemberID="firstResponder"/>

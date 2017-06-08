@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, NewGameDelegate {
 
     //IBOulets
     @IBOutlet weak var eventLabel1: UILabel!
@@ -42,30 +42,12 @@ class ViewController: UIViewController {
         super.init(coder: aDecoder)
         
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         displayround()
-        
-        //test to see data in dictionary - it works! - CHANGE this to be calling function below *func
-        
-        let space = dictionaryOfEvents.eventDictionary[0]
-        print(space.event)
-        
-        let random = dictionaryOfEvents.nextRound()
-        print(random[0].event)
-        
-        
-       // let key0 = dictionaryOfEvents.eventDictionary[0]
-       // print(key0)
-        //print(key0)
-        
-        //for event in dictionaryOfEvents.eventDictionary {
-        //    print("\(event.event) in \(event.year)")
-        //}
-        
-      
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,9 +63,16 @@ class ViewController: UIViewController {
            ---------------------------- */
         
         if roundsCompleted >= howManyRounds {
+            
             //end game and show score
-          
-            self.performSegue(withIdentifier: "segue", sender: nil)
+            let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "ResultsController") as! ResultsController
+            secondViewController.score = roundsCorrect
+            secondViewController.numberOfRounds = howManyRounds
+            self.present(secondViewController, animated: true, completion: nil)
+ 
+            
+            //self.navigationController?.pushViewController(secondViewController, animated: true)
+            //self.performSegue(withIdentifier: "segue", sender: nil)
         // 
         // If user has not completed all rounds then contiue display next round
         //
@@ -142,6 +131,21 @@ class ViewController: UIViewController {
             
         }
     }
+    
+    // When user presses new game from other view reset counters and display round (new game)
+    func userPressedNewGame(_ playAgain: Bool) {
+        roundsCompleted = 0
+        roundsCorrect = 0
+        displayround()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "back" {
+            let secondVC = segue.destination as? ResultsController
+            secondVC?.delegate = self
+        }
+    }
+   
    
     @IBAction func box1DownArrow() {
        rearrangeRound(fromIndex: 0, toIndex: 1)
@@ -175,6 +179,8 @@ class ViewController: UIViewController {
     @IBAction func nextRound() {
         displayround()
     }
+    
+    
     
     
     

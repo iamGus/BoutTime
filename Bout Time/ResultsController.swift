@@ -8,21 +8,30 @@
 
 import UIKit
 
+protocol NewGameDelegate {
+    func userPressedNewGame(_ playAgain: Bool)
+}
+
 class ResultsController: UIViewController {
     
     
     @IBOutlet weak var scoreResultsLabel: UILabel!
+    
+    var delegate: NewGameDelegate! = nil
     
     var score = 0
     var numberOfRounds = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        
-        
-
-        // Do any additional setup after loading the view.
+        // Update score label with results and total rounds completed
+        scoreResultsLabel.text = "\(score)/\(numberOfRounds)"
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,8 +40,12 @@ class ResultsController: UIViewController {
     }
     
     
-    @IBAction func playAgain() {
+    @IBAction func playAgain(_ sender: Any) {
+        delegate?.userPressedNewGame(true)
+        dismiss(animated: true, completion: nil)
+    
     }
+  
     
 
     /*
