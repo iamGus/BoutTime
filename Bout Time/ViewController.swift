@@ -21,11 +21,11 @@ class ViewController: UIViewController {
     
     
     
-    // Propertoies to setup
+    // Properties to setup
     let dictionaryOfEvents: EventRounds
-    var fourRandomEvents: [EventContent]
+    var fourRandomEvents: [EventContent] // For each round this stores the active rounds random events, used to display and also check if events in active round are in correct order
     var timer = Timer()
-    var counter = 0 // used with timer
+    var counter = 0 // used with timer, timer starts at 0
     var roundTracking = GameRound() // Keeps score and amount of rounds completed data
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,11 +40,11 @@ class ViewController: UIViewController {
         super.init(coder: aDecoder)
         
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        // Display first round
         displayround()
     }
 
@@ -56,10 +56,9 @@ class ViewController: UIViewController {
     // MARK: - Setup and display round
     func displayround() {
         
-        /* ---------------------------
-         If user has completed all rounds in howManyRounds then finish game and show user score
-           ---------------------------- */
         
+        // If user has completed all rounds then finish game and show user score
+ 
         if roundTracking.completed >= roundTracking.totalRounds {
             
             //end game and show score
@@ -67,28 +66,24 @@ class ViewController: UIViewController {
             secondViewController.score = roundTracking.correct
             secondViewController.numberOfRounds = roundTracking.totalRounds
             self.present(secondViewController, animated: true, completion: nil)
- 
-            
-            //self.navigationController?.pushViewController(secondViewController, animated: true)
-            //self.performSegue(withIdentifier: "segue", sender: nil)
-        // 
-        // If user has not completed all rounds then contiue display next round
-        //
+
+        
+        // If user has not completed all rounds then continue to display next round
             
         } else {
         //Hide next round button
         nextRoundButton.isHidden = true
-        // Make new / update instance of next round questions
-        fourRandomEvents = dictionaryOfEvents.nextRound()
+        // Get four new random events
+        fourRandomEvents = dictionaryOfEvents.nextRound() // update instance with the four random events
         eventLabel1.text = "\(fourRandomEvents[0].event)"
         eventLabel2.text = "\(fourRandomEvents[1].event)"
         eventLabel3.text = "\(fourRandomEvents[2].event)"
         eventLabel4.text = "\(fourRandomEvents[3].event)"
         
-        //Show shake button
+        // Show shake button
         ShakeButton.isHidden = false
         
-        //Show and start counter
+        // Show and start counter
         timerLabel.isHidden = false
         timerLabel.text = "0:00"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)
@@ -101,17 +96,17 @@ class ViewController: UIViewController {
         
         //Hide timer and reset it for next round
         timerLabel.isHidden = true
-        timer.invalidate()
-        counter = 0
+        timer.invalidate() // Stop timer
+        counter = 0 // Reset timer to 0
         
         
         ShakeButton.isHidden = true
-        roundTracking.completed += 1
-        if answer == true {
-            roundTracking.correct += 1
+        roundTracking.completed += 1 // Update tracker that another round completed
+        if answer == true { // If events are in correct order
+            roundTracking.correct += 1 // update score
             nextRoundButton.setImage(#imageLiteral(resourceName: "next_round_success"), for: UIControlState.normal)
             nextRoundButton.isHidden = false
-        } else {
+        } else { // if events are not in correct order
             nextRoundButton.setImage(#imageLiteral(resourceName: "next_round_fail"), for: UIControlState.normal)
             nextRoundButton.isHidden = false
         }
@@ -131,7 +126,7 @@ class ViewController: UIViewController {
     }
     
     
-   
+   // If one of the event arrow button pressed then rearrangeRound func activated
    
     @IBAction func box1DownArrow() {
        rearrangeRound(fromIndex: 0, toIndex: 1)
@@ -173,12 +168,10 @@ class ViewController: UIViewController {
     }
     
     
-    
-    
     // Changes fourRandomEvent array order and updates buttons text fields
     func rearrangeRound(fromIndex: Int, toIndex: Int) {
         swap(&fourRandomEvents[fromIndex], &fourRandomEvents[toIndex])
-        // Update event lables text
+        // Update event labels text
         eventLabel1.text = "\(fourRandomEvents[0].event)"
         eventLabel2.text = "\(fourRandomEvents[1].event)"
         eventLabel3.text = "\(fourRandomEvents[2].event)"
@@ -190,7 +183,7 @@ class ViewController: UIViewController {
     func updateTimer() {
         if counter >= 60 {
             timer.invalidate()
-            let answer = dictionaryOfEvents.checkRound(orderOfQuestions: fourRandomEvents) //NOTE repeated this three times now
+            let answer = dictionaryOfEvents.checkRound(orderOfQuestions: fourRandomEvents)
             checkRound(check: answer)
         } else {
         counter += 1

@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-protocol EventContent { // Making sure year data is inlcuded in event, though each event only has one conncted value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later stafe if desired.
+// Making sure year data is included in event, though each event only has one connected value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later state if desired.
+protocol EventContent {
     var event: String { get }
     var year: Int { get }
 }
@@ -29,6 +30,7 @@ protocol EventRounds {
     func checkRound(orderOfQuestions: [EventContent]) -> Bool
 }
 
+// Storing each round stats data
 struct GameRound: Game {
     let totalRounds: Int = 1
     var completed: Int = 0
@@ -41,7 +43,7 @@ struct Event: EventContent {
     
 }
 
-// error states for collecting data
+// Error states for collecting data
 enum DataError: Error {
     case invalidResource
     case conversionFailure
@@ -63,11 +65,11 @@ class Plistconverter {
     }
 }
 
-//
+// Converts raw dictionary into EventContent protocol
 class EventDataUnarchiver {
     static func eventData(fromDictionary dictionary: [String: AnyObject]) throws -> [EventContent] {
         
-        var eventData: [EventContent] = [] //NOTE dont think data is best word here to describe it
+        var eventData: [EventContent] = [] //NOTE don't think data is best word here to describe it
         
         for (key, value) in dictionary {
             if let itemDictionary = value as? [String: Any], let year = itemDictionary["year"] as? Int {
@@ -84,7 +86,7 @@ class EventDataUnarchiver {
     }
 }
 
-
+// Main class that will deal with all round needs
 class AllRounds: EventRounds {
     
     var eventDictionary: [EventContent]
@@ -93,9 +95,10 @@ class AllRounds: EventRounds {
         self.eventDictionary = eventDictionary
     }
     
+    // Activated from within nextRound method returns an array of four random numbers
     func fourRandomNumbers(maxQuestion max: Int) -> [Int] {
         var result: [Int] = [] // Array to return four random numbers
-        var nums = Array(0..<max) // Store numbers and remove when used, to stop number being repeated in reults array
+        var nums = Array(0..<max) // Store numbers and remove when used, to stop number being repeated in results array
         
         for _ in 1...4 { // repeat 4 times
             
@@ -105,13 +108,13 @@ class AllRounds: EventRounds {
             // random number
             result.append(nums[arrayKey])
             
-            // make sure the number isnt repeated
+            // make sure the number isn't repeated
             nums.remove(at: arrayKey)
         }
         return result
     }
     
-    
+    // Called to display next (new) round of four events
     func nextRound() -> [EventContent] {
         var fourRandomQuestions: [EventContent] = []
         let fourNumbers = fourRandomNumbers(maxQuestion: eventDictionary.count)

@@ -17,7 +17,7 @@ class ResultsController: UIViewController {
     
     @IBOutlet weak var scoreResultsLabel: UILabel!
     
-    // Setup properties taht will be passed from main ViewController
+    // Setup properties that will be passed from main ViewController
     var score = 0
     var numberOfRounds = 0
 
