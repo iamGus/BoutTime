@@ -302,6 +302,7 @@
                                 <state key="normal" title="Button" image="play_again"/>
                                 <connections>
                                     <action selector="playAgain:" destination="v2D-z5-Gao" eventType="touchUpInside" id="OT4-Bd-eaB"/>
+                                    <segue destination="z6w-yQ-v8L" kind="unwind" unwindAction="unwindToThisViewControllerWithSegue:" id="rgd-Nb-p3q"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Score" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SFl-On-1OU">
@@ -324,10 +325,10 @@
                     </view>
                     <connections>
                         <outlet property="scoreResultsLabel" destination="iCO-qV-PhD" id="8zE-ml-87I"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="back" id="mVF-Qx-ltt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9WP-Wk-hBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="z6w-yQ-v8L" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="884" y="38"/>
         </scene>

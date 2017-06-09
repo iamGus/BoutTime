@@ -6,19 +6,18 @@
 //  Copyright © 2017 Angus Muller. All rights reserved.
 //
 
-import UIKit
+// New viewController for score results and play again button
 
-protocol NewGameDelegate {
-    func userPressedNewGame(_ playAgain: Bool)
-}
+// Play again function uses unwind segue so no code for this action in here
+
+import UIKit
 
 class ResultsController: UIViewController {
     
     
     @IBOutlet weak var scoreResultsLabel: UILabel!
     
-    var delegate: NewGameDelegate! = nil
-    
+    // Setup properties taht will be passed from main ViewController
     var score = 0
     var numberOfRounds = 0
 
@@ -41,21 +40,8 @@ class ResultsController: UIViewController {
     
     
     @IBAction func playAgain(_ sender: Any) {
-        delegate?.userPressedNewGame(true)
-        dismiss(animated: true, completion: nil)
     
     }
   
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

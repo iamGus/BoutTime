@@ -14,6 +14,12 @@ protocol EventContent { // Making sure year data is inlcuded in event, though ea
     var year: Int { get }
 }
 
+protocol Game {
+    var totalRounds: Int { get }
+    var completed: Int { get set }
+    var correct: Int { get set }
+}
+
 protocol EventRounds {
     var eventDictionary: [EventContent] {get set }
     
@@ -21,6 +27,12 @@ protocol EventRounds {
     func fourRandomNumbers(maxQuestion max: Int) -> [Int]
     func nextRound() -> [EventContent]
     func checkRound(orderOfQuestions: [EventContent]) -> Bool
+}
+
+struct GameRound: Game {
+    let totalRounds: Int = 1
+    var completed: Int = 0
+    var correct: Int = 0
 }
 
 struct Event: EventContent {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, NewGameDelegate {
+class ViewController: UIViewController {
 
     //IBOulets
     @IBOutlet weak var eventLabel1: UILabel!
@@ -24,11 +24,9 @@ class ViewController: UIViewController, NewGameDelegate {
     // Propertoies to setup
     let dictionaryOfEvents: EventRounds
     var fourRandomEvents: [EventContent]
-    let howManyRounds = 1
-    var roundsCompleted = 0 // So game knows how many rounds it has already done
-    var roundsCorrect = 0 // Counter to keep track of how many rounds correctly completed - for score
     var timer = Timer()
-    var counter = 0
+    var counter = 0 // used with timer
+    var roundTracking = GameRound() // Keeps score and amount of rounds completed data
     
     required init?(coder aDecoder: NSCoder) {
         do {
@@ -62,12 +60,12 @@ class ViewController: UIViewController, NewGameDelegate {
          If user has completed all rounds in howManyRounds then finish game and show user score
            ---------------------------- */
         
-        if roundsCompleted >= howManyRounds {
+        if roundTracking.completed >= roundTracking.totalRounds {
             
             //end game and show score
             let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "ResultsController") as! ResultsController
-            secondViewController.score = roundsCorrect
-            secondViewController.numberOfRounds = howManyRounds
+            secondViewController.score = roundTracking.correct
+            secondViewController.numberOfRounds = roundTracking.totalRounds
             self.present(secondViewController, animated: true, completion: nil)
  
             
@@ -108,9 +106,9 @@ class ViewController: UIViewController, NewGameDelegate {
         
         
         ShakeButton.isHidden = true
-        roundsCompleted += 1
+        roundTracking.completed += 1
         if answer == true {
-            roundsCorrect += 1
+            roundTracking.correct += 1
             nextRoundButton.setImage(#imageLiteral(resourceName: "next_round_success"), for: UIControlState.normal)
             nextRoundButton.isHidden = false
         } else {
@@ -132,19 +130,7 @@ class ViewController: UIViewController, NewGameDelegate {
         }
     }
     
-    // When user presses new game from other view reset counters and display round (new game)
-    func userPressedNewGame(_ playAgain: Bool) {
-        roundsCompleted = 0
-        roundsCorrect = 0
-        displayround()
-    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "back" {
-            let secondVC = segue.destination as? ResultsController
-            secondVC?.delegate = self
-        }
-    }
    
    
     @IBAction func box1DownArrow() {
@@ -180,7 +166,11 @@ class ViewController: UIViewController, NewGameDelegate {
         displayround()
     }
     
-    
+    @IBAction func unwindToThisViewController(segue: UIStoryboardSegue) {
+        roundTracking.completed = 0
+        roundTracking.correct = 0
+        displayround()
+    }
     
     
     
