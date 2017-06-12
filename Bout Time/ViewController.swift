@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Bout Time
+//  Bout Time - Past UK Prime Mininsters and when they first came into power
 //
 //  Created by Angus Muller on 22/05/2017.
 //  Copyright © 2017 Angus Muller. All rights reserved.
@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var ShakeButton: UIButton!
     @IBOutlet weak var nextRoundButton: UIButton!
-    
     
     
     // Properties to setup
@@ -53,6 +52,8 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
     // MARK: - Setup and display round
     func displayround() {
         
@@ -84,6 +85,7 @@ class ViewController: UIViewController {
         ShakeButton.isHidden = false
         
         // Show and start counter
+        timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 50.0, weight: UIFontWeightRegular)
         timerLabel.isHidden = false
         timerLabel.text = "0:00"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)

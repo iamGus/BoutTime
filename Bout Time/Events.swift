@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-// Making sure year data is included in event, though each event only has one connected value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later state if desired.
+// Making sure year data is included in event, though each event only has one connected value (year), this structure has been chosen as it will make it easy to add more fields (e.g. url) at a later state if desired
 protocol EventContent {
     var event: String { get }
     var year: Int { get }
@@ -32,7 +32,7 @@ protocol EventRounds {
 
 // Storing each round stats data
 struct GameRound: Game {
-    let totalRounds: Int = 1
+    let totalRounds: Int = 6
     var completed: Int = 0
     var correct: Int = 0
 }
@@ -52,7 +52,7 @@ enum DataError: Error {
 
 // Converts event data from a plist file and puts (converts) data into a dictionary
 class Plistconverter {
-    static func dictionary(fromFile name: String, ofType type: String) throws -> [String: AnyObject] { // NOTE wonder about changed to [String: Int]
+    static func dictionary(fromFile name: String, ofType type: String) throws -> [String: AnyObject] {
         guard let path = Bundle.main.path(forResource: name, ofType: type) else { // checks the file path is valid
             throw DataError.invalidResource
         }
@@ -69,7 +69,7 @@ class Plistconverter {
 class EventDataUnarchiver {
     static func eventData(fromDictionary dictionary: [String: AnyObject]) throws -> [EventContent] {
         
-        var eventData: [EventContent] = [] //NOTE don't think data is best word here to describe it
+        var eventData: [EventContent] = [] 
         
         for (key, value) in dictionary {
             if let itemDictionary = value as? [String: Any], let year = itemDictionary["year"] as? Int {
@@ -123,6 +123,7 @@ class AllRounds: EventRounds {
             let content = Event(event: eachEvent.event, year: eachEvent.year)
             fourRandomQuestions.append(content)
         }
+        print(fourRandomQuestions)
         return fourRandomQuestions
     }
     
